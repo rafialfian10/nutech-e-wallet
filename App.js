@@ -20,8 +20,6 @@ import Home from './pages/Home';
 import History from './pages/History';
 import Profile from './pages/Profile';
 import Transfer from './pages/Transfer';
-import TextRegister from './pages/component/TextRegister';
-
 
 //Create Bottom Tab Navigation & stack navigator
 const Tab = createBottomTabNavigator();
@@ -113,7 +111,6 @@ export default function App() {
                       <Stack.Screen name="History" component={History} options={{headerShown: true }} />
                       <Stack.Screen name="Profile" component={Profile} options={{headerShown: true }} />
                       <Stack.Screen name="Transfer" component={Transfer} options={{headerShown: true }} />
-                      <Stack.Screen name="TextRegister" component={TextRegister} options={{headerShown: true }} />
                     </Stack.Navigator>
                 )
               }
