@@ -4,7 +4,7 @@ import  React, { useState } from 'react';
 import { useQuery } from 'react-query';
 
 // api
-import { API } from './config/api';
+import { API } from './Config/Api';
 
 const History = () => {
 
@@ -40,7 +40,7 @@ const History = () => {
                     <Text style={styles.title}>Transaction History</Text>
                 </Box>
                 <Box style={styles.contentSearchFilter}>
-                    <TextInput style={styles.contentSearch} placeholder="Search by id or type....." onChangeText={(value) => handleSearch(value)} value={search}/>
+                    <TextInput style={styles.contentSearch} placeholder="Search by type transaction or id transaction....." onChangeText={(value) => handleSearch(value)} value={search}/>
                     {/* <Box style={styles.contentFilter}>
                         <Select style={{fontSize:14, height:45}}  selectedValue={filter} placeholder="Filter" onValueChange={itemValue => {setFilter(itemValue);}}>
                             <Select.Item label="Filter" value="" /> 

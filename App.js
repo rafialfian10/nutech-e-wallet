@@ -1,25 +1,26 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Drawer, NativeBaseProvider, useTheme } from "native-base";
+import { NativeBaseProvider, useTheme } from "native-base";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from "@expo/vector-icons";
-import { UserContextProvider, UserContext } from './src/context/userContext';
-import { useEffect, useState, useContext } from "react";
+// import { UserContextProvider } from './pages/Context/UserContext';y
+import { useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Spinner from "react-native-loading-spinner-overlay";
+// import Spinner from "react-native-loading-spinner-overlay";
 
 // setAuthToken
-import { setAuthToken, API } from "./src/config/api";
+import { setAuthToken, API } from "./pages/Config/Api"
 
 // pages
-import Index from './src/Index';
-import Register from './src/Register';
-import Login from './src/Login';
-import Home from './src/Home';
-import History from './src/History';
-import Profile from './src/Profile';
-import Transfer from './src/Transfer';
+import Index from './pages/Index';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import History from './pages/History';
+import Profile from './pages/Profile';
+import Transfer from './pages/Transfer';
+import TextRegister from './pages/component/TextRegister';
 
 
 //Create Bottom Tab Navigation & stack navigator
@@ -54,10 +55,8 @@ function MyTab() {
   );
 }
 
+// function app
 export default function App() {
-  
-  // const [state, dispatch] = useContext(UserContext);
-  // console.log(state)
   
   // client
   const Client = new QueryClient();
@@ -73,10 +72,7 @@ export default function App() {
       if(token){
         setLogin(true);
         setAuthToken(token);
-        const response = await API.get('/getProfile');
-        let payload = response.data.data;
-        payload.token = AsyncStorage.token
-        
+
       } else {
         setLogin(false)
       }
@@ -95,19 +91,19 @@ export default function App() {
   }, []);
   
     return (
-      <NavigationContainer>
-        <QueryClientProvider client={Client}>
-          <NativeBaseProvider>
-            <UserContextProvider>
+      <QueryClientProvider client={Client}>
+        <NativeBaseProvider>
+          <NavigationContainer>
+            {/* <UserContextProvider> */}
               {
               // isLoading ? (
               //     <Spinner size="large" visible={isLoading} textContent={'Loading...'} overlayColor="rgba(0, 0, 0, 0.25)" />
               //   ) :
                   login === false ? (
-                    <Stack.Navigator>
-                      <Stack.Screen name="Index" component={Index} options={{headerShown: false }} />
-                      <Stack.Screen name="Register" component={Register} options={{headerShown: false }} />
+                    <Stack.Navigator initialRouteName='Index'>
                       <Stack.Screen name="Login" component={Login} options={{headerShown: false }} />
+                      <Stack.Screen name="Register" component={Register} options={{headerShown: false }} />
+                      <Stack.Screen name="Index" component={Index} options={{headerShown: false }} />
                     </Stack.Navigator >
                    
                 ) : (
@@ -117,13 +113,14 @@ export default function App() {
                       <Stack.Screen name="History" component={History} options={{headerShown: true }} />
                       <Stack.Screen name="Profile" component={Profile} options={{headerShown: true }} />
                       <Stack.Screen name="Transfer" component={Transfer} options={{headerShown: true }} />
+                      <Stack.Screen name="TextRegister" component={TextRegister} options={{headerShown: true }} />
                     </Stack.Navigator>
                 )
               }
-            </UserContextProvider>
-          </NativeBaseProvider>
-        </QueryClientProvider>
-      </NavigationContainer>
+            {/* </UserContextProvider> */}
+          </NavigationContainer>
+        </NativeBaseProvider>
+      </QueryClientProvider>
     );
 }
 

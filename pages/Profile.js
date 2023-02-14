@@ -1,20 +1,16 @@
 import { Text, Box, Image, View, Menu, Pressable } from 'native-base';
 import { StyleSheet, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { useQuery } from 'react-query';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useQueryClient } from "react-query";
-import { UserContext } from './context/userContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // api
-import { API } from './config/api';
+import { API } from './Config/Api';
 
-const Profile = ({navigation}) => {
+const Profile = ({ navigation }) => {
 
-    const [state, dispatch] = useContext(UserContext);
-    console.log(state)
-
-    const client = useQueryClient();
+    const queryClient = useQueryClient();
 
     // state modal
     const [modalVisible, setModalVisible] = useState(false);
@@ -101,81 +97,79 @@ const Profile = ({navigation}) => {
       }
 
     // handle logout
-    const handleLogout = () => {
-        AsyncStorage.removeItem("token");
-        navigation.reset({
-            index: 0,
-            routes: [{ name: 'Login' }],
-        });
-        client.clear()
+    async function handleLogout() {
+        await AsyncStorage.removeItem('token');
+        navigation.navigate("Index");
         alert("Logout successfully");
     }
 
     return (
-        <View style={styles.container}>
-            <Box style={styles.profileContainer}>
-                <Menu w="190" trigger={triggerProps => { return <Pressable {...triggerProps} style={styles.hamburger}>
-                    <Image source={require('../assets/hamburger.png')} style={styles.photo} alt=""/></Pressable>;}}>
-                    <TouchableOpacity style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
-                        <Text style={styles.textStyle}>Update profile</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonLogout} onPress={() => {navigation.navigate("Index"); handleLogout();}}>
-                        <Text style={styles.textStyle}>Logout</Text>
-                    </TouchableOpacity>
-                </Menu>
-                <Box style={styles.contentProfile}>
-                    <Box style={styles.contentName}>
-                        <Text style={styles.firstName}>{getProfile?.first_name}</Text>
-                        <Text style={styles.lastName}>{getProfile?.last_name}</Text>
+        <>
+            <View style={styles.container}>
+                <Box style={styles.profileContainer}>
+                    <Menu w="190" trigger={triggerProps => { return <Pressable {...triggerProps} style={styles.hamburger}>
+                        <Image source={require('../assets/hamburger.png')} style={styles.photo} alt=""/></Pressable>;}}>
+                        <TouchableOpacity style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
+                            <Text style={styles.textStyle}>Update profile</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonLogout} onPress={handleLogout}>
+                            <Text style={styles.textStyle}>Logout</Text>
+                        </TouchableOpacity>
+                    </Menu>
+                    <Box style={styles.contentProfile}>
+                        <Box style={styles.contentName}>
+                            <Text style={styles.firstName}>{getProfile?.first_name}</Text>
+                            <Text style={styles.lastName}>{getProfile?.last_name}</Text>
+                        </Box>
+                        <Box style={styles.contentPhoto}>
+                            <Image source={require('../assets/admin.png')} style={{width: '100%', height: '100%'}}  alt=''/>
+                        </Box>
                     </Box>
-                    <Box style={styles.contentPhoto}>
-                        <Image source={require('../assets/admin.png')} style={{width: '100%', height: '100%'}}  alt=''/>
+                
+                    <Box style={styles.contentDataProfile}>
+                        <Box style={styles.subContentDataProfile}>
+                            <Text style={styles.textKey}>First Name : </Text>
+                            <Text style={styles.textvalue}>{getProfile?.first_name}</Text>
+                        </Box>
+                        <Box style={styles.subContentDataProfile}>
+                            <Text style={styles.textKey}>Last Name : </Text>
+                            <Text style={styles.textvalue}>{getProfile?.last_name}</Text>
+                        </Box>
+                        <Box style={styles.subContentDataProfile}>
+                            <Text style={styles.textKey}>Email : </Text>
+                            <Text style={styles.textvalue}>{getProfile?.email}</Text>
+                        </Box>
                     </Box>
-                </Box>
-               
-                <Box style={styles.contentDataProfile}>
-                    <Box style={styles.subContentDataProfile}>
-                        <Text style={styles.textKey}>First Name : </Text>
-                        <Text style={styles.textvalue}>{getProfile?.first_name}</Text>
-                    </Box>
-                    <Box style={styles.subContentDataProfile}>
-                        <Text style={styles.textKey}>Last Name : </Text>
-                        <Text style={styles.textvalue}>{getProfile?.last_name}</Text>
-                    </Box>
-                    <Box style={styles.subContentDataProfile}>
-                        <Text style={styles.textKey}>Email : </Text>
-                        <Text style={styles.textvalue}>{getProfile?.email}</Text>
-                    </Box>
-                </Box>
-                {/* Modal */}
-                <Box style={styles.contentModalProfile}>
-                    <View style={styles.centeredView}>
-                        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { Alert.alert('Modal has been closed.'); setModalVisible(!modalVisible);}}>
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                
-                                    <TextInput style={styles.textInput} placeholder={getProfile?.first_name} onChangeText={(value) => handleChange("first_name", value)} value={form.first_name}/>
-                                    {error.first_name && <Text style={{width:'100%', alignSelf:'center', color:'red'}}>{error.first_name}</Text>}
+                    {/* Modal */}
+                    <Box style={styles.contentModalProfile}>
+                        <View style={styles.centeredView}>
+                            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { Alert.alert('Modal has been closed.'); setModalVisible(!modalVisible);}}>
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                    
+                                        <TextInput style={styles.textInput} placeholder={getProfile?.first_name} onChangeText={(value) => handleChange("first_name", value)} value={form.first_name}/>
+                                        {error.first_name && <Text style={{width:'100%', alignSelf:'center', color:'red'}}>{error.first_name}</Text>}
 
-                                    <TextInput style={styles.textInput} placeholder={getProfile?.last_name}  onChangeText={(value) => handleChange("last_name", value)} value={form.last_name}/>
-                                    {error.last_name && <Text style={{width:'100%', alignSelf:'center', color:'red'}}>{error.last_name}</Text>}
+                                        <TextInput style={styles.textInput} placeholder={getProfile?.last_name}  onChangeText={(value) => handleChange("last_name", value)} value={form.last_name}/>
+                                        {error.last_name && <Text style={{width:'100%', alignSelf:'center', color:'red'}}>{error.last_name}</Text>}
 
-                                    <Box style={styles.btn}>
-                                        <TouchableOpacity style={[styles.buttonModal, styles.buttonClose]} onPress={handleUpdateProfile}>
-                                        <Text style={styles.textStyle}>Update</Text>
-                                        </TouchableOpacity>
+                                        <Box style={styles.btn}>
+                                            <TouchableOpacity style={[styles.buttonModal, styles.buttonClose]} onPress={handleUpdateProfile}>
+                                            <Text style={styles.textStyle}>Update</Text>
+                                            </TouchableOpacity>
 
-                                        <TouchableOpacity style={[styles.buttonModal, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
-                                        <Text style={styles.textStyle}>Cancel</Text>
-                                        </TouchableOpacity>
-                                    </Box>
+                                            <TouchableOpacity style={[styles.buttonModal, styles.buttonClose]} onPress={() => setModalVisible(!modalVisible)}>
+                                            <Text style={styles.textStyle}>Cancel</Text>
+                                            </TouchableOpacity>
+                                        </Box>
+                                    </View>
                                 </View>
-                            </View>
-                        </Modal>
-                    </View>
+                            </Modal>
+                        </View>
+                    </Box>
                 </Box>
-            </Box>
-        </View>
+            </View>
+        </>
     )
 }
 

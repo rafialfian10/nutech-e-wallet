@@ -1,11 +1,11 @@
-import { Text, Box, Image, View, Button } from 'native-base';
 import { StyleSheet, TextInput, Modal, SafeAreaView, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { Text, Box, Image, View, Button } from 'native-base';
 import  React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useQuery } from 'react-query';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // api
-import { API } from './config/api';
+import { API } from './Config/Api';
 
 const Transfer = ({navigation}) => {
 
@@ -99,7 +99,7 @@ const Transfer = ({navigation}) => {
                         <Box style={styles.contentTransfer}>
                             <Text style={styles.textRecent}>Recent</Text>
                             <Box style={styles.contenContact}>
-                                <Image source={require('../assets/saitama.png')} style={styles.photo} alt=''/>
+                                <Image source={require('../assets/profile-default.png')} style={styles.photo} alt=''/>
                                 <Box>
                                     <Text style={styles.textName}>Saitama</Text>
                                     <Text style={styles.textPhone}>085880250963</Text>

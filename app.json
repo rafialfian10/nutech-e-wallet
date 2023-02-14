@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "nutech",
-    "slug": "nutech",
+    "name": "nutech-wallet",
+    "slug": "nutech-wallet",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -25,14 +25,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.rafialfian.nutech"
+      "package": "com.vinzatama.nutechwallet"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "6d998458-10ff-46a1-9f7d-b7e2bbae65b5"
+        "projectId": "773da403-7830-4381-860d-c6dac1edc448"
       }
     }
   }

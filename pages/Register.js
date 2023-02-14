@@ -1,11 +1,11 @@
 // component
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Text, Box, Image, View, ScrollView} from 'native-base';
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // api
-import { API } from './config/api';
+import { API } from './Config/Api';
 
 const Register = ({navigation}) => {
     
@@ -97,7 +97,7 @@ const Register = ({navigation}) => {
       <View style={styles.container}>
           <LinearGradient colors={['#3cb371', '#98fb98', '#e0ffff']} style={styles.container} start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}>
             <Box style={styles.contentImage}>
-                <Image source={require('../assets/wallet.png')} style={styles.image} alt=""/>
+                <Image source={require('../assets/wallet.png')} style={styles.imageWallet} alt=""/>
                 <Image source={require('../assets/logo.png')} style={styles.image} alt=""/>
             </Box>
             <Text style={styles.desc}>Wallet</Text>
@@ -135,19 +135,29 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 120,
-  },
-  desc: {
-      width: 180,
-      fontSize: 20,
-      fontWeight: 'bold',
-      alignSelf: 'flex-end',
-      textAlign: 'left',
-      marginTop: -50,
-      marginBottom:100,
-      color: '#3B3B3B',
-      marginRight: 60,
-  },
+},
+image: {
+    marginHorizontal: 0,
+    marginBottom: 40,
+},
+imageWallet: {
+    width: 120,
+    height: 120,
+    marginBottom: 40,
+},
+desc: {
+    width: 180,
+    fontSize: 20,
+    fontWeight: '800',
+    alignSelf: 'flex-end',
+    textAlign: 'left',
+    marginTop: -90,
+    marginBottom:100,
+    color: '#3B3B3B',
+    marginRight: 50,
+},
   title: {
       width: 300,
       height: 50,

@@ -1,12 +1,12 @@
 import { Text, Box, View, Image } from 'native-base';
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useMutation } from 'react-query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setAuthToken } from './config/api';
 
 // api
-import { API } from './config/api';
+import { API } from './Config/Api';
 
 const Login = ({navigation, checkLogin}) => {
   
@@ -31,7 +31,7 @@ const Login = ({navigation, checkLogin}) => {
     };
   
     // handle submit category
-    const handleSubmit = async () => {
+    const handleSubmit = useMutation(async () => {
         try {
             const config = {
                 headers: {
@@ -64,13 +64,12 @@ const Login = ({navigation, checkLogin}) => {
                     const response = await API.post('/login', body, config);
 
                     if(response.data.status === 0) {
-                        await AsyncStorage.setItem("token", response.data.data.token);
-                        console.log(response.data.message);
-                        checkLogin();
-
-                        alert("Login Succesfully");
+                    await AsyncStorage.setItem("token", response.data.data.token);
+                    console.log(response.data.message);
+                    // checkLogin();
+                    navigation.navigate("Home");
+                    alert("Login Succesfully");
                     }
-                    // navigation.navigate('Home');
                 } else {
                     setError(messageError)
                 }
@@ -78,12 +77,12 @@ const Login = ({navigation, checkLogin}) => {
               console.log(err)
               alert("email belum terdaftar atau username atau password salah)")
           }
-    }
+    })
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#3cb371', '#98fb98', '#e0ffff']} style={styles.container} start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}>
                 <Box style={styles.contentImage}>
-                    <Image source={require('../assets/wallet.png')} style={styles.image} alt=""/>
+                    <Image source={require('../assets/wallet.png')} style={styles.imageWallet} alt=""/>
                     <Image source={require('../assets/logo.png')} style={styles.image} alt=""/>
                 </Box>
                 <Text style={styles.desc}>Wallet</Text>
@@ -94,7 +93,7 @@ const Login = ({navigation, checkLogin}) => {
                         <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} onChangeText={(value) => handleChange("password", value)} value={form.password}/>
 
                         <TouchableOpacity style={styles.button}>
-                            <Text style={styles.text} onPress={handleSubmit}>Login</Text>
+                            <Text style={styles.text} onPress={() => handleSubmit.mutate()}>Login</Text>
                         </TouchableOpacity>
                         <Text style={styles.textRegister}>New Users?<Text onPress={() => navigation.navigate("Register")} style={styles.linkRegister}> Register</Text></Text>
                     </Box>
@@ -108,21 +107,31 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     contentImage: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      marginTop: 120,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 120,
+    },
+    image: {
+        marginHorizontal: 0,
+        marginBottom: 40,
+    },
+    imageWallet: {
+        width: 120,
+        height: 120,
+        marginBottom: 40,
     },
     desc: {
         width: 180,
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: '800',
         alignSelf: 'flex-end',
         textAlign: 'left',
-        marginTop: -50,
+        marginTop: -90,
         marginBottom:100,
         color: '#3B3B3B',
-        marginRight: 60,
+        marginRight: 50,
     },
     title: {
         width: 300,

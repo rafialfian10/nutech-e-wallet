@@ -8,7 +8,7 @@ const Index = ({navigation}) => {
       <View style={styles.container}>
          <LinearGradient colors={['#3cb371', '#98fb98', '#e0ffff']} style={styles.container} start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}>
             <Box style={styles.contentImage}>
-              <Image source={require('../assets/wallet.png')} style={styles.image} alt=""/>
+              <Image source={require('../assets/wallet.png')} style={styles.imageWallet} alt=""/>
               <Image source={require('../assets/logo.png')} style={styles.image} alt=""/>
             </Box>
               <Text style={styles.desc}>Wallet</Text>
@@ -27,10 +27,17 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
+      alignItems: 'center',
       marginTop: 300,
     },
     image: {
       marginHorizontal: 0,
+      marginBottom: 40,
+    },
+    imageWallet: {
+      width: 120,
+      height: 120,
+      marginBottom: 40,
     },
     text: {
         color: 'white',
@@ -40,13 +47,13 @@ const styles = StyleSheet.create({
     desc: {
         width: 180,
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: '800',
         alignSelf: 'flex-end',
         textAlign: 'left',
-        marginTop: -50,
+        marginTop: -90,
         marginBottom:100,
         color: '#3B3B3B',
-        marginRight: 60,
+        marginRight: 50,
     },
     buttonLogin: {
       width: 320, 
