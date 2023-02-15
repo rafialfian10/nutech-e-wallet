@@ -1,14 +1,21 @@
 import { Text, Box, View, Image } from 'native-base';
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from './Context/UserContext';
 
 // api
 import { API } from './Config/Api';
 
-const Login = ({navigation, checkLogin}) => {
+const Login = ({navigation}) => {
+
+    // const [state, dispatch] = useContext(UserContext);
+
+    // useEffect(() => {
+    //     state?.isLogin === true && props.navigation.navigate("Home");
+    // })
   
     // state form
     const [form, setForm] = useState({
@@ -31,7 +38,7 @@ const Login = ({navigation, checkLogin}) => {
     };
   
     // handle submit category
-    const handleSubmit = useMutation(async () => {
+    const handleSubmit = async () => {
         try {
             const config = {
                 headers: {
@@ -66,10 +73,10 @@ const Login = ({navigation, checkLogin}) => {
                     if(response.data.status === 0) {
                     await AsyncStorage.setItem("token", response.data.data.token);
                     console.log(response.data.message);
-                    // checkLogin();
-                    navigation.navigate("Home");
                     alert("Login Succesfully");
-                    }
+                }
+                // navigation.navigate("Home")
+                navigation.navigate('Root', { screen: 'Home' });
                 } else {
                     setError(messageError)
                 }
@@ -77,7 +84,7 @@ const Login = ({navigation, checkLogin}) => {
               console.log(err)
               alert("email belum terdaftar atau username atau password salah)")
           }
-    })
+    }
     return (
         <View style={styles.container}>
             <LinearGradient colors={['#3cb371', '#98fb98', '#e0ffff']} style={styles.container} start={{ x: 1, y: 0 }} end={{ x: 1, y: 1 }}>
@@ -93,7 +100,7 @@ const Login = ({navigation, checkLogin}) => {
                         <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={true} onChangeText={(value) => handleChange("password", value)} value={form.password}/>
 
                         <TouchableOpacity style={styles.button}>
-                            <Text style={styles.text} onPress={() => handleSubmit.mutate()}>Login</Text>
+                            <Text style={styles.text} onPress={handleSubmit}>Login</Text>
                         </TouchableOpacity>
                         <Text style={styles.textRegister}>New Users?<Text onPress={() => navigation.navigate("Register")} style={styles.linkRegister}> Register</Text></Text>
                     </Box>

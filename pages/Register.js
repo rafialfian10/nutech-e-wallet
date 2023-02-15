@@ -2,13 +2,14 @@
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { Text, Box, Image, View, ScrollView} from 'native-base';
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
 import { LinearGradient } from 'expo-linear-gradient';
 
 // api
 import { API } from './Config/Api';
 
 const Register = ({navigation}) => {
-    
+
   // state form
     const [form, setForm] = useState({
       email: "",

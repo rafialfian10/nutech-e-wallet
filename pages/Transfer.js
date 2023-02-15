@@ -99,7 +99,7 @@ const Transfer = ({navigation}) => {
                         <Box style={styles.contentTransfer}>
                             <Text style={styles.textRecent}>Recent</Text>
                             <Box style={styles.contenContact}>
-                                <Image source={require('../assets/profile-default.png')} style={styles.photo} alt=''/>
+                                <Image source={require('../assets/saitama.png')} style={styles.photo} alt=''/>
                                 <Box>
                                     <Text style={styles.textName}>Saitama</Text>
                                     <Text style={styles.textPhone}>085880250963</Text>

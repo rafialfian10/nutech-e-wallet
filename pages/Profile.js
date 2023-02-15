@@ -6,7 +6,7 @@ import { useQueryClient } from "react-query";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // api
-import { API } from './Config/Api';
+import { API, setAuthToken } from './Config/Api';
 
 const Profile = ({ navigation }) => {
 
@@ -97,9 +97,13 @@ const Profile = ({ navigation }) => {
       }
 
     // handle logout
-    async function handleLogout() {
+    const handleLogout = async () => {
         await AsyncStorage.removeItem('token');
-        navigation.navigate("Index");
+        dispatch({
+            type: 'LOGOUT',
+            payload: {},
+        });
+        navigation.navigate('Index');
         alert("Logout successfully");
     }
 
@@ -112,7 +116,7 @@ const Profile = ({ navigation }) => {
                         <TouchableOpacity style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
                             <Text style={styles.textStyle}>Update profile</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonLogout} onPress={handleLogout}>
+                        <TouchableOpacity style={styles.buttonLogout} onPress={() =>handleLogout()}>
                             <Text style={styles.textStyle}>Logout</Text>
                         </TouchableOpacity>
                     </Menu>

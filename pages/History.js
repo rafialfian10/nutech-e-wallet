@@ -1,6 +1,6 @@
 import { Text, Box, Select, View } from 'native-base';
 import { StyleSheet, TextInput, SafeAreaView, ScrollView, } from 'react-native';
-import  React, { useState } from 'react';
+import  React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 // api
@@ -9,7 +9,7 @@ import { API } from './Config/Api';
 const History = () => {
 
     // state search
-    const [search, setSearch] = useState("")
+    const [search, setSearch] = useState("");
 
     // handle search
     const handleSearch = (value) => {
@@ -26,7 +26,10 @@ const History = () => {
         return response.data.data;
     });
 
-    refetcHistory();
+    useEffect(() => {
+        refetcHistory();
+    }, [])
+
 
     // function parse int to string
     const parse = (x) => {
