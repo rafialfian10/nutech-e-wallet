@@ -13,7 +13,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 import { setAuthToken, API } from './Config/Api';
 
 // pages
-// import Index from "./Index";
+import Index from "./Index";
 import Register from './Register';
 import Login from './Login';
 import Home from './Home';
@@ -112,14 +112,11 @@ const Container = () => {
           {state.isLogin === true ? (
                 <>
                   <Stack.Screen name='MyTab' component={MyTab} options={{headerShown: false }} />
-                  {/* <Stack.Screen name="Home" component={Home} options={{headerShown: true }}  /> */}
-                  {/* <Stack.Screen name="Profile" component={Profile} options={{headerShown: true }}/> */}
-                  {/* <Stack.Screen name='History' component={History} options={{headerShown: true }}/> */}
                   <Stack.Screen name='Transfer' component={Transfer} options={{headerShown: true }}/>
                 </>
           ) : (
             <>
-              {/* <Stack.Screen name='Index' component={Index} options={{headerShown: false }} /> */}
+              <Stack.Screen name='Index' component={Index} options={{headerShown: false }} />
               <Stack.Screen name='Login' component={Login} options={{headerShown: false }} />
               <Stack.Screen name='Register' component={Register} options={{headerShown: false }} />
             </>

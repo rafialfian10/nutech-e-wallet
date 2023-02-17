@@ -103,7 +103,7 @@ const Profile = ({ navigation }) => {
             type: 'LOGOUT',
             payload: {},
         });
-        navigation.navigate('Login');
+        navigation.navigate('Index');
         alert("Logout successfully");
     }
 
