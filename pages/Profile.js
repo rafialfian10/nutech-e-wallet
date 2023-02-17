@@ -1,16 +1,16 @@
 import { Text, Box, Image, View, Menu, Pressable } from 'native-base';
 import { StyleSheet, Modal, TextInput, TouchableOpacity } from 'react-native';
 import { useQuery } from 'react-query';
-import { useState } from 'react';
-import { useQueryClient } from "react-query";
+import { useContext, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext } from './Context/UserContext';
 
 // api
-import { API, setAuthToken } from './Config/Api';
+import { API } from './Config/Api';
 
 const Profile = ({ navigation }) => {
 
-    const queryClient = useQueryClient();
+    const [state, dispatch] = useContext(UserContext);
 
     // state modal
     const [modalVisible, setModalVisible] = useState(false);
@@ -103,7 +103,7 @@ const Profile = ({ navigation }) => {
             type: 'LOGOUT',
             payload: {},
         });
-        navigation.navigate('Index');
+        navigation.navigate('Login');
         alert("Logout successfully");
     }
 
@@ -116,7 +116,7 @@ const Profile = ({ navigation }) => {
                         <TouchableOpacity style={[styles.button, styles.buttonOpen]} onPress={() => setModalVisible(true)}>
                             <Text style={styles.textStyle}>Update profile</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonLogout} onPress={() =>handleLogout()}>
+                        <TouchableOpacity style={styles.buttonLogout} onPress={handleLogout}>
                             <Text style={styles.textStyle}>Logout</Text>
                         </TouchableOpacity>
                     </Menu>

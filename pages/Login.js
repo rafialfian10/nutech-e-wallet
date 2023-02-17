@@ -1,8 +1,7 @@
 import { Text, Box, View, Image } from 'native-base';
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useState, useContext, useEffect } from 'react';
-import { useMutation } from 'react-query';
+import { useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './Context/UserContext';
 
@@ -11,12 +10,8 @@ import { API } from './Config/Api';
 
 const Login = ({navigation}) => {
 
-    // const [state, dispatch] = useContext(UserContext);
+    const [state, dispatch] = useContext(UserContext);
 
-    // useEffect(() => {
-    //     state?.isLogin === true && props.navigation.navigate("Home");
-    // })
-  
     // state form
     const [form, setForm] = useState({
         email: "",
@@ -69,14 +64,18 @@ const Login = ({navigation}) => {
                     const body = JSON.stringify(form)
     
                     const response = await API.post('/login', body, config);
+                    console.log("sss",response)
 
                     if(response.data.status === 0) {
                     await AsyncStorage.setItem("token", response.data.data.token);
                     console.log(response.data.message);
+                    dispatch({
+                        type: 'LOGIN_SUCCESS',
+                        payload: {response},
+                    });
                     alert("Login Succesfully");
+                    navigation.navigate("Home");
                 }
-                // navigation.navigate("Home")
-                navigation.navigate('Root', { screen: 'Home' });
                 } else {
                     setError(messageError)
                 }

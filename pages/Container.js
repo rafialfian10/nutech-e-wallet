@@ -13,7 +13,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 import { setAuthToken, API } from './Config/Api';
 
 // pages
-import Index from "./Index";
+// import Index from "./Index";
 import Register from './Register';
 import Login from './Login';
 import Home from './Home';
@@ -21,10 +21,9 @@ import History from './History';
 import Profile from './Profile';
 import Transfer from './Transfer';
 
-// Create bottom tab & stack navigator & drawer navigator
+// Create bottom tab & stack navigator
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-// const Drawer = createDrawerNavigator();
 
 function MyTab() {
   // Init Theme
@@ -53,17 +52,6 @@ function MyTab() {
   );
 }
 
-// function root navigation
-function Root() {
-  return (
-    <Drawer.Navigator initialRouteName="Home">
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Profile" component={Profile} />
-      <Drawer.Screen name='History' component={History}  />
-      <Drawer.Screen name='Transfer' component={Transfer} />
-    </Drawer.Navigator>
-  );
-}
 
 
 // function container (routes)
@@ -120,19 +108,18 @@ const Container = () => {
         //   <Spinner size="large" visible={isLoading} textContent={'Loading...'} overlayColor="rgba(0, 0, 0, 0.25)" />
         //   ) : 
       <>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="">
           {state.isLogin === true ? (
-            <>
-              <Stack.Screen name='MyTab' component={MyTab} options={{headerShown: false }} />
-              <Stack.Screen name='Root' component={Root} options={{headerShown: false }} />
-              {/* <Stack.Screen name="Home" component={Home} options={{headerShown: true }}  />
-              <Stack.Screen name="Profile" component={Profile} options={{headerShown: true }}/>
-              <Stack.Screen name='History' component={History} options={{headerShown: true }}/>
-              <Stack.Screen name='Transfer' component={Transfer} options={{headerShown: true }}/> */}
-            </>    
+                <>
+                  <Stack.Screen name='MyTab' component={MyTab} options={{headerShown: false }} />
+                  {/* <Stack.Screen name="Home" component={Home} options={{headerShown: true }}  /> */}
+                  {/* <Stack.Screen name="Profile" component={Profile} options={{headerShown: true }}/> */}
+                  {/* <Stack.Screen name='History' component={History} options={{headerShown: true }}/> */}
+                  <Stack.Screen name='Transfer' component={Transfer} options={{headerShown: true }}/>
+                </>
           ) : (
             <>
-              <Stack.Screen name='Index' component={Index} options={{headerShown: false }} />
+              {/* <Stack.Screen name='Index' component={Index} options={{headerShown: false }} /> */}
               <Stack.Screen name='Login' component={Login} options={{headerShown: false }} />
               <Stack.Screen name='Register' component={Register} options={{headerShown: false }} />
             </>
