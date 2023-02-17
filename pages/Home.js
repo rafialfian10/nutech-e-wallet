@@ -1,14 +1,17 @@
 import { Text, Box, View, Image, Button } from 'native-base';
 import { StyleSheet, SafeAreaView, ScrollView, Modal, TextInput, TouchableOpacity, Alert } from 'react-native';
-import  React, { useState, useEffect } from 'react';
+import  React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from 'react-query';
 import Swiper from 'react-native-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // api
 import { API } from './Config/Api';
+import { UserContext } from './Context/UserContext';
 
 const Home = ({navigation}) => {
+
+    const [state, dispatch] = useContext(UserContext);
 
     // state active button
     const [activeButton, setActiveButton] = useState({
@@ -28,8 +31,8 @@ const Home = ({navigation}) => {
     });
 
     useEffect(() => {
-        refetchBalance()
-    }, [])
+        refetchBalance();
+    })
 
     // state topup
     const [form, setForm] = useState({
@@ -111,15 +114,6 @@ const Home = ({navigation}) => {
     const parse = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
-
-    const handleOff = (id) =>{
-        if(activeButton.active === id){
-            setActiveButton({active:null, css:styles.buttonTopup})
-        }else{
-            setActiveButton({active:id, css: styles.btnActive})
-
-        }
-    }
 
     return (
         <View style={styles.container}>

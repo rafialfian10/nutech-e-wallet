@@ -16,15 +16,15 @@ export default function App() {
     const theme = extendTheme();
   
     return (
-      <NavigationContainer>
-        <QueryClientProvider client={Client}>
-          <NativeBaseProvider theme={theme}>
-            <UserContextProvider>
-              <Container/>
-            </UserContextProvider>
-          </NativeBaseProvider>
-        </QueryClientProvider>
-      </NavigationContainer>
+      <UserContextProvider>
+        <NavigationContainer>
+          <QueryClientProvider client={Client}>
+            <NativeBaseProvider theme={theme}>
+                <Container/>
+            </NativeBaseProvider>
+          </QueryClientProvider>
+        </NavigationContainer>
+      </UserContextProvider>
     );
 }
 

@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput, Modal, SafeAreaView, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Text, Box, Image, View, Button } from 'native-base';
-import  React, { useState } from 'react';
+import  React, { useState  } from 'react';
 import { useQuery } from 'react-query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -60,21 +60,20 @@ const Transfer = ({navigation}) => {
             messageError.amount = "";
         }
 
-          if (messageError.amount === '') {
-              const body = JSON.stringify(form);
+            if (messageError.amount === '') {
+                const body = JSON.stringify(form);
 
-            // update profile
-            const response = await API.post('/transfer', body, config);
-              
-            if(response.data.status === 0) {
-                console.log(response.data.message);
-                setModalVisible(true);
-                setActiveButton({active:null});    
-                setForm({amount: null});
-                setError({amount: null});
+                // update profile
+                const response = await API.post('/transfer', body, config);
+                
+                if(response.data.status === 0) {
+                    console.log(response.data.message);
+                    setModalVisible(true);
+                    setActiveButton({active:null});    
+                    setForm({amount: null});
+                    setError({amount: null});
+                }
                 refetchBalanceTransfer();
-            }
-
             } else {
                 setError(messageError);
             }
@@ -96,65 +95,65 @@ const Transfer = ({navigation}) => {
                     <Text style={styles.title}>Transfer</Text>
                 </Box>
                 <ScrollView>
-                        <Box style={styles.contentTransfer}>
-                            <Text style={styles.textRecent}>Recent</Text>
-                            <Box style={styles.contenContact}>
-                                <Image source={require('../assets/saitama.png')} style={styles.photo} alt=''/>
-                                <Box>
-                                    <Text style={styles.textName}>Saitama</Text>
-                                    <Text style={styles.textPhone}>085880250963</Text>
-                                </Box>
+                    <Box style={styles.contentTransfer}>
+                        <Text style={styles.textRecent}>Recent</Text>
+                        <Box style={styles.contenContact}>
+                            <Image source={require('../assets/saitama.png')} style={styles.photo} alt=''/>
+                            <Box>
+                                <Text style={styles.textName}>Saitama</Text>
+                                <Text style={styles.textPhone}>085880250963</Text>
                             </Box>
-                            <Text style={styles.textRecent}>Set Amount</Text>
-                            <Text style={styles.textInfoTransfer}>How much would you like to tansfer?</Text>
-
-                            <Box style={styles.contentAmout}>
-                                    <Button  style={activeButton.active === 0 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 0 }); setForm({amount: 50000})}}>
-                                        <Text style={styles.textTransfer}>Rp. 50.000</Text>
-                                    </Button>
-                                    <Button  style={activeButton.active === 1 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 1 }); setForm({amount: 100000})}}>
-                                        <Text style={styles.textTransfer}>Rp. 100.000</Text>
-                                    </Button>
-                                    <Button style={activeButton.active === 2 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 2 }); setForm({amount: 200000})}}>
-                                        <Text style={styles.textTransfer}>Rp. 200.000</Text>
-                                    </Button>
-                                    <Button style={activeButton.active === 3 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 3 }); setForm({amount: 300000})}}>
-                                        <Text style={styles.textTransfer}>Rp. 300.000</Text>
-                                    </Button>
-                                    <Button style={activeButton.active === 4 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 4 }); setForm({amount: 400000})}}>
-                                        <Text style={styles.textTransfer}>Rp. 500.000</Text>
-                                    </Button>
-                                    <Button style={activeButton.active === 5 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 5 }); setForm({amount: 1000000})}}>
-                                        <Text style={styles.textTransfer}>Rp. 1000.000</Text>
-                                    </Button>
-                                   
-                                    <TextInput style={styles.textInput} placeholder='Set transfer amount' keyboardType="numeric" onChangeText={(value) => handleChange("amount", value)} value={form}/>
-                                    {error.amount && <Text style={{width:'100%', alignSelf:'center', color:'red'}}>{error.amount}</Text>}
-                            </Box>
-
-                            <TouchableOpacity style={styles.buttonTransfer2} onPress={handleTransfer}>
-                                <Text style={styles.textStyle}>Transfer</Text>
-                            </TouchableOpacity>
                         </Box>
+                        <Text style={styles.textRecent}>Set Amount</Text>
+                        <Text style={styles.textInfoTransfer}>How much would you like to tansfer?</Text>
+
+                        <Box style={styles.contentAmout}>
+                            <Button  style={activeButton.active === 0 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 0 }); setForm({amount: 50000})}}>
+                                <Text style={styles.textTransfer}>Rp. 50.000</Text>
+                            </Button>
+                            <Button  style={activeButton.active === 1 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 1 }); setForm({amount: 100000})}}>
+                                <Text style={styles.textTransfer}>Rp. 100.000</Text>
+                            </Button>
+                            <Button style={activeButton.active === 2 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 2 }); setForm({amount: 200000})}}>
+                                <Text style={styles.textTransfer}>Rp. 200.000</Text>
+                            </Button>
+                            <Button style={activeButton.active === 3 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 3 }); setForm({amount: 300000})}}>
+                                <Text style={styles.textTransfer}>Rp. 300.000</Text>
+                            </Button>
+                            <Button style={activeButton.active === 4 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 4 }); setForm({amount: 400000})}}>
+                                <Text style={styles.textTransfer}>Rp. 500.000</Text>
+                            </Button>
+                            <Button style={activeButton.active === 5 ? styles.btnActive : styles.buttonTransfer} onPress={() => {setActiveButton({ active: 5 }); setForm({amount: 1000000})}}>
+                                <Text style={styles.textTransfer}>Rp. 1000.000</Text>
+                            </Button>
+                                   
+                            <TextInput style={styles.textInput} placeholder='Set transfer amount' keyboardType="numeric" onChangeText={(value) => handleChange("amount", value)} value={form}/>
+                            {error.amount && <Text style={{width:'100%', alignSelf:'center', color:'red'}}>{error.amount}</Text>}
+                        </Box>
+
+                        <TouchableOpacity style={styles.buttonTransfer2} onPress={handleTransfer}>
+                            <Text style={styles.textStyle}>Transfer</Text>
+                        </TouchableOpacity>
+                    </Box>
                        
-                        <View style={styles.centeredView}>
-                            <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { Alert.alert('Modal has been closed.'); setModalVisible(!modalVisible);}}>
-                                <View style={styles.centeredView}>
-                                    <View style={styles.modalView}>
-                                        <Box style={styles.contentCheck}>
-                                            <Image source={require('../assets/check.png')} style={{width: '100%', height:'100%'}} alt=''/>
-                                        </Box>
-                                        <Text style={styles.textStatus}>Transfer Success</Text>
-                                        <Text style={styles.textInfoStatus}>Your transfer has been successfully done.</Text>
-                                        <Box style={styles.btn}>
-                                            <TouchableOpacity style={[styles.buttonModal, styles.buttonClose]} onPress={() => {navigation.navigate('Home'); setModalVisible(!modalVisible)}}>
-                                                <Text style={styles.textStyle}>Done</Text>
-                                            </TouchableOpacity>
-                                        </Box>
-                                    </View>
+                    <View style={styles.centeredView}>
+                        <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={() => { Alert.alert('Modal has been closed.'); setModalVisible(!modalVisible);}}>
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Box style={styles.contentCheck}>
+                                        <Image source={require('../assets/check.png')} style={{width: '100%', height:'100%'}} alt=''/>
+                                    </Box>
+                                    <Text style={styles.textStatus}>Transfer Success</Text>
+                                    <Text style={styles.textInfoStatus}>Your transfer has been successfully done.</Text>
+                                    <Box style={styles.btn}>
+                                        <TouchableOpacity style={[styles.buttonModal, styles.buttonClose]} onPress={() => {navigation.navigate('Home'); setModalVisible(!modalVisible)}}>
+                                            <Text style={styles.textStyle}>Done</Text>
+                                        </TouchableOpacity>
+                                    </Box>
                                 </View>
-                            </Modal>
-                        </View>
+                            </View>
+                        </Modal>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
         </View>

@@ -5,9 +5,8 @@ import { Drawer, useTheme } from "native-base";
 import { useEffect, useState, useContext } from 'react';
 import { UserContext } from './Context/UserContext';
 import { createStackNavigator } from '@react-navigation/stack';
-// import { createDrawerNavigator } from "@react-navigation/drawer";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Spinner from "react-native-loading-spinner-overlay";
+// import Spinner from "react-native-loading-spinner-overlay";
 
 // setAuthToken
 import { setAuthToken, API } from './Config/Api';
@@ -52,13 +51,10 @@ function MyTab() {
   );
 }
 
-
-
 // function container (routes)
 const Container = () => {
 
     const [state, dispatch] = useContext(UserContext);
-    console.log("use context", state)
 
     //state login
     const [login, setLogin] = useState(false);
@@ -80,15 +76,18 @@ const Container = () => {
           
                 dispatch({
                   type: 'USER_SUCCESS',
-                  payload,
+                  payload: payload,
                 });
+                setIsLoading(false);
             } else {
-                setLogin(false)
+              setLogin(false);
             }
         } catch (err){
             dispatch({
                 type: "AUTH_ERROR",
+                payload: {},
             });
+            setIsLoading(false);
             console.log(err);
         }
     }
@@ -99,29 +98,28 @@ const Container = () => {
     }
 
     useEffect(() => {
-      // checkLogin()
-        isAsyncTokenExist();
+      checkLogin();
+      isAsyncTokenExist();
     }, []);
 
     return (
-        // isLoading ? (
-        //   <Spinner size="large" visible={isLoading} textContent={'Loading...'} overlayColor="rgba(0, 0, 0, 0.25)" />
-        //   ) : 
       <>
-        <Stack.Navigator initialRouteName="">
-          {state.isLogin === true ? (
-                <>
-                  <Stack.Screen name='MyTab' component={MyTab} options={{headerShown: false }} />
-                  <Stack.Screen name='Transfer' component={Transfer} options={{headerShown: true }}/>
-                </>
-          ) : (
-            <>
-              <Stack.Screen name='Index' component={Index} options={{headerShown: false }} />
-              <Stack.Screen name='Login' component={Login} options={{headerShown: false }} />
-              <Stack.Screen name='Register' component={Register} options={{headerShown: false }} />
-            </>
-          )}
-        </Stack.Navigator>
+        {
+        // isLoading === false ? (
+        //   <Spinner size="large" visible={isLoading} textContent={'Loading...'} overlayColor="rgba(0, 0, 0, 0.25)" />
+        // ) : 
+        state.isLogin === true ? (
+          <Stack.Navigator>
+            <Stack.Screen name='MyTab' component={MyTab} options={{headerShown: false }} />
+            <Stack.Screen name='Transfer' component={Transfer} options={{headerShown: true }}/>
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator>
+            <Stack.Screen name='Index' component={Index} options={{headerShown: false }} />
+            <Stack.Screen name='Login' component={Login} options={{headerShown: false }} />
+            <Stack.Screen name='Register' component={Register} options={{headerShown: false }} />
+          </Stack.Navigator>
+        )}
       </>
     );
 }

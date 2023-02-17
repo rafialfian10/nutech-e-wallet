@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './Context/UserContext';
 
 // api
-import { API } from './Config/Api';
+import { API, setAuthToken } from './Config/Api';
 
 const Login = ({navigation}) => {
 
@@ -61,24 +61,24 @@ const Login = ({navigation}) => {
             }
   
             if (messageError.email === "" && messageError.password === "") {
-                    const body = JSON.stringify(form)
+                const body = JSON.stringify(form)
     
-                    const response = await API.post('/login', body, config);
-                    console.log("sss",response)
+                const response = await API.post('/login', body, config);
 
-                    if(response.data.status === 0) {
+                if(response.data.status === 0) {
                     await AsyncStorage.setItem("token", response.data.data.token);
                     console.log(response.data.message);
                     dispatch({
                         type: 'LOGIN_SUCCESS',
-                        payload: {response},
+                        payload: response.data.data,
                     });
+                    setAuthToken(response.data.data.token);
                     alert("Login Succesfully");
                     navigation.navigate("Home");
                 }
-                } else {
-                    setError(messageError)
-                }
+            } else {
+                setError(messageError)
+            }
           } catch (err) {
               console.log(err)
               alert("email belum terdaftar atau username atau password salah)")
